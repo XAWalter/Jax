@@ -1,4 +1,3 @@
-# Jax
 ## Required Pkgs  
 1. iverilog  
 2. make  
