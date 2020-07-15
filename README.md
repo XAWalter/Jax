@@ -11,7 +11,9 @@
 ## Installation  
 Script assumes Makefile template, and GoBoard constraints file are in the same directory. If this is not wanted  
 `cat "$DIR"/goboard_Makefile_template >> "$project_name"/Makefile`
+
 and
+
  `cat "$DIR"/Go_Board_Constraints.pcf >> "$project_name"/"$project_name"_constraints_top.pcf`
 can be changed to the location of the Makefile template and constraints file
 
