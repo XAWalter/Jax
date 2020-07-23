@@ -14,11 +14,11 @@ cap = cv2.VideoCapture(0)
 
 
 # Honestly have no clue. Use codec or somthing for video recording
-fourcc = cv2.VideoWriter_fourcc(*'XVID')
+#fourcc = cv2.VideoWriter_fourcc(*'XVID')
 
 # Set var and output file for the recording of the captured frames
 # at 20 fps and 720x480 resolution
-out = cv2.VideoWriter('output.mkv', fourcc, 20.0, (720,480))
+#out = cv2.VideoWriter('output.mkv', fourcc, 20.0, (720,480))
 
 # I think if wecam is not found exit?
 if not cap.isOpened():
@@ -49,10 +49,21 @@ while cap.isOpened():
         print("x stop")
         count = 0
 
-    # for every rectangle in faces
+    # var for biggest face calc
+    max_object = 0;
+    index = -1
+    i = 0;
+    # Check for biggest face for steady target
     for (x, y, w, h) in faces:
+        if w*h > max_object:
+            max_object = w*h
+            index = i
+        i += 1
 
-        # put a dot in the middle of the rectangle  
+    # put a dot in the middle of the rectangle  
+    if len(faces) != 0:
+        x, y, w, h = faces[index][0], faces[index][1], faces[index][2], faces[index][3]
+
         cv2.circle(frame, (x+(w//2), y+(h//2)), 5, (255, 0, 255), -1)
         
         # Image thresholds for aiming
@@ -69,7 +80,6 @@ while cap.isOpened():
             if count >= 10:
                 print("fire")
         count += 1
-        break
 
 
 #       if y+(h//2) < 180:
@@ -93,7 +103,7 @@ while cap.isOpened():
 
 
     # write frame to output file for record
-    out.write(frame)
+    #out.write(frame)
 
     # output frame to screen
     cv2.imshow('frame', frame)
