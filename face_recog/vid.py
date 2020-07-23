@@ -13,7 +13,6 @@ face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 cap = cv2.VideoCapture(0)
 
 
-
 # Honestly have no clue. Use codec or somthing for video recording
 fourcc = cv2.VideoWriter_fourcc(*'XVID')
 
@@ -25,6 +24,9 @@ out = cv2.VideoWriter('output.mkv', fourcc, 20.0, (720,480))
 if not cap.isOpened():
     print("no vid")
     exit()
+        
+# counter for positives
+count = 0
 
 # while webcam is recording
 while cap.isOpened():
@@ -43,8 +45,9 @@ while cap.isOpened():
 
     # if no faces dont move
     if len(faces) == 0:
-        ser.write(b'3')
+        ser.write(b'2')
         print("x stop")
+        count = 0
 
     # for every rectangle in faces
     for (x, y, w, h) in faces:
@@ -63,6 +66,11 @@ while cap.isOpened():
         else:
             ser.write(b'2')
             print("x stop")
+            if count >= 10:
+                print("fire")
+        count += 1
+        break
+
 
 #       if y+(h//2) < 180:
 #           ser.write(b'1')
