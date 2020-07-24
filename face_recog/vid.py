@@ -64,7 +64,7 @@ while cap.isOpened():
     if len(faces) != 0:
         x, y, w, h = faces[index][0], faces[index][1], faces[index][2], faces[index][3]
 
-        cv2.circle(frame, (x+(w//2), y+(h//2)), 5, (255, 0, 255), -1)
+        cv2.circle(frame, (x+(w//2), y+(h//2)+150), 5, (255, 0, 255), -1)
         
         # Image thresholds for aiming
 #        print(x+(w/2), y+(h/2))
