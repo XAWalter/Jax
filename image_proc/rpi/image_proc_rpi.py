@@ -28,8 +28,13 @@ if not cap.isOpened():
 # counter for positives
 count = 0
 
+
 # while webcam is recording
 while cap.isOpened():
+
+    # if aimed at target
+    x_true = 0;
+    y_true = 0;
 
     #set var for captured frames from webcam
     ret, frame = cap.read()
@@ -45,8 +50,10 @@ while cap.isOpened():
 
     # if no faces dont move
     if len(faces) == 0:
-        ser.write(b'2')
+        ser.write(b'\x01')
+        ser.write(b'\x04')
         print("x stop")
+        print("y stop")
         count = 0
 
     # var for biggest face calc
@@ -63,34 +70,43 @@ while cap.isOpened():
     # put a dot in the middle of the rectangle  
     if len(faces) != 0:
         x, y, w, h = faces[index][0], faces[index][1], faces[index][2], faces[index][3]
-
-        cv2.circle(frame, (x+(w//2), y+(h//2)+150), 5, (255, 0, 255), -1)
+        ny = y + 60;
+        
+        cv2.circle(frame, (x+(w//2), ny+(h//2)), 5, (255, 0, 255), -1)
         
         # Image thresholds for aiming
-#        print(x+(w/2), y+(h/2))
+        # print(x+(w/2), y+(h/2))
+        
+        # x aim
         if x+(w//2) < 280:
-            ser.write(b'1')
+            ser.write(b'\x00')
             print("right")
         elif x+(w//2) > 440:
-            ser.write(b'3')
+            ser.write(b'\x02')
             print("left")
         else:
-            ser.write(b'2')
+            ser.write(b'\x01')
             print("x stop")
-            if count >= 10:
-                print("fire")
+            x_true = 1;
+        
+        # y aim
+        if ny+(h//2) < 180:
+            ser.write(b'\x03')
+            print("up")
+        elif ny+(h//2) > 300:
+            ser.write(b'\x05')
+            print("down")
+        else:
+            ser.write(b'\x04')
+            print("y stop")
+            y_true = 1;
+        
+        
+        if count >= 10 and x_true and y_true:
+            ser.write(b'\x06')
+            print("fire")
+         
         count += 1
-
-
-#       if y+(h//2) < 180:
-#           ser.write(b'1')
-#           print("up")
-#       elif y+(h//2) > 300:
-#           ser.write(b'3')
-#           print("down")
-#       else:
-#           ser.write(b'2')
-#           print("y stop")
 
 
 
