@@ -4,7 +4,7 @@ import cv2 # Computer Vision
 import serial # Serial Communication with GoBoard
 
 # Open Port with GoBoard at 115200 Baud
-ser = serial.Serial('/dev/ttyUSB1', 115200)
+ser = serial.Serial('/dev/ttyUSB7', 115200)
 
 # Use intel face haar cascade for face regognition
 face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
@@ -48,10 +48,11 @@ while cap.isOpened():
     # save array of rectangles of found faces into var faces
     faces = face_cascade.detectMultiScale(grey, 1.3, 5)
 
+    # hex value to send to GoBoard
+    hex_pos = 0x00
+
     # if no faces dont move
     if len(faces) == 0:
-        ser.write(b'\x01')
-        ser.write(b'\x04')
         print("x stop")
         print("y stop")
         count = 0
@@ -79,32 +80,37 @@ while cap.isOpened():
         
         # x aim
         if x+(w//2) < 280:
-            ser.write(b'\x00')
+            hex_pos = hex_pos | 0x01
             print("right")
         elif x+(w//2) > 440:
-            ser.write(b'\x02')
+            hex_pos = hex_pos | 0x02
             print("left")
         else:
-            ser.write(b'\x01')
             print("x stop")
             x_true = 1;
         
         # y aim
         if ny+(h//2) < 180:
-            ser.write(b'\x03')
+            hex_pos = hex_pos | 0x04
             print("up")
         elif ny+(h//2) > 300:
-            ser.write(b'\x05')
+            hex_pos = hex_pos | 0x08
             print("down")
         else:
-            ser.write(b'\x04')
             print("y stop")
             y_true = 1;
         
         
         if count >= 10 and x_true and y_true:
-            ser.write(b'\x06')
+            hex_pos = hex_pos | 0x10
             print("fire")
+
+        packet = bytearray()
+        packet.append(hex_pos)
+
+        print(bin(hex_pos))
+        
+        ser.write(packet)
          
         count += 1
 
