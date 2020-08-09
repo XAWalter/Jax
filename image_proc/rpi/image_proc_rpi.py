@@ -105,14 +105,14 @@ while cap.isOpened():
             hex_pos = hex_pos | 0x10
             print("fire")
 
-        packet = bytearray()
-        packet.append(hex_pos)
-
-        print(bin(hex_pos))
-        
-        ser.write(packet)
-         
-        count += 1
+    packet = bytearray()
+    packet.append(hex_pos)
+    
+    print(bin(hex_pos))
+    
+    ser.write(packet)
+     
+    count += 1
 
 
 
