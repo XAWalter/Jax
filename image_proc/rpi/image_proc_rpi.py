@@ -1,10 +1,10 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 import cv2 # Computer Vision
 import serial # Serial Communication with GoBoard
 
 # Open Port with GoBoard at 115200 Baud
-ser = serial.Serial('/dev/ttyUSB7', 115200)
+ser = serial.Serial('/dev/ttyUSB1', 115200)
 
 # Use intel face haar cascade for face regognition
 face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
@@ -128,7 +128,7 @@ while cap.isOpened():
     #out.write(frame)
 
     # output frame to screen
-    cv2.imshow('frame', frame)
+    #cv2.imshow('frame', frame)
 
 
     # press q to quit recording
