@@ -60,6 +60,7 @@ def main():
                 i_ser.timeout = None 
                 state = 1
             except serial.SerialException as e:
+                exit()
                 state = 0
         
         else:
@@ -126,7 +127,7 @@ def image_proc():
         cv2.circle(frame, (x+(w//2), ny+(h//2)), 5, (255, 0, 255), -1)
 
         # Image thresholds for aiming
-        # print(x+(w/2), y+(h/2))
+        print(x+(w/2), y+(h/2))
 
         # x aim
         if x+(w//2) < 280:
@@ -151,7 +152,7 @@ def image_proc():
             y_true = 1;
 
 
-        if count >= 10 and x_true and y_true:
+        if count >= 4 and x_true and y_true:
             hex_pos = hex_pos | 0x10
             #print("fire")
 
