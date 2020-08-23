@@ -1,0 +1,19 @@
+***Notes for bounded servo logic code***
+
+- There are two ways available to use for left/up movement
+	> 45000: moves left(counterclockwise) up until a certain degree (we'll call this the 0 degree) 
+	> 60000: constantly moves left(counterclockwise) until button is released. (up to about 50000 if wanted to be slower, 62500 if faster; recommend using increments/decrememts of 2500)
+
+- There is currently only one way available for right/down movement
+	>  15000: constantly moves right(clockwise) until button is released. (up to about 25000 if wanted to be slower, 10000 if faster; recommend using increments/decrememts of 2500)
+
+- If using 45000 for left/up movement, then should calibrate
+	> before connecting anything to servo, press button for left movement for a couple seconds until it no longer moves; this will be the leftmost point (0 degrees)
+	> now connect what needs to be connected to servo facing however far left/up you want it to go so that it is set in the 0 degree position	 	  
+	
+- In angle_convert.v, there is a right/down bound, however it can be unreliable so be carful if using
+	> 22727272 value given for roughly 180 degree movement
+	> if all the way to the left (0 degree) then servo will not move past 180 degree
+	> otherwise right bound will be x + 180 degree where x is current position (i.e. if at 90 degree, then bound moves to 270) 
+	> unsure why this problem happens; all attempts fix somehow wind up with same or worse results 
+	> so if using, recommend being cautious with right/down as to not go past what is physically possible for system
