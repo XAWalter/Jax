@@ -14,6 +14,7 @@ module Servo_interface (
     input i_Switch_2, //sw2
 	 input i_Switch_3, //sw3
 	 input i_Switch_4, //sw4
+	 input trigger,
 	 input clr, 
     input i_Clk,//clk,
 	 //LEDS on Go Board for check during testing
@@ -55,6 +56,7 @@ module Servo_interface (
 		  .i_Switch_4(i_Switch_4), //down
 		  .x_target(x_target), // automatic target value for x-axis, currently hard coded need to adjust later
 		  .y_target(y_target),// automatic target value for y-axis, currently hard coded need to adjust later
+	    	  .fire_button(trigger), // fire button
 //		  .x_pos(x_pos),// current x position
 //		  .y_pos(y_pos),// current y position
 			//angles value for PWM
