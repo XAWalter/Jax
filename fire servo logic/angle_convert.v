@@ -21,6 +21,7 @@ module sw_to_angle(
 			 i_Switch_2,
 			 i_Switch_3,
 			 i_Switch_4,
+			 fire_button
 	 input x_target, //automated target x-axis val
 	 input y_target, //automated target y-axis val
 	// input x_pos,
@@ -507,7 +508,7 @@ begin
 		//wait
 		notFire:
 		begin
-			if(i_Switch_4)begin//manual && x_axis == 200000000)begin//x_target)begin
+			if(fire_button)begin//manual && x_axis == 200000000)begin//x_target)begin
 				next_state5 = fire;
 			end
 			/*else if (!manual && i_Switch_4)begin
