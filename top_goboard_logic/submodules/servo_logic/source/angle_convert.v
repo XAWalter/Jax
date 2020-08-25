@@ -21,7 +21,7 @@ module sw_to_angle(
 			 i_Switch_2,
 			 i_Switch_3,
 			 i_Switch_4,
-			 fire_button
+			 fire_button,
 	 input x_target, //automated target x-axis val
 	 input y_target, //automated target y-axis val
 	// input x_pos,

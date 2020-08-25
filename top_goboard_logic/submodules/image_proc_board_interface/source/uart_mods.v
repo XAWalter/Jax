@@ -1,4 +1,4 @@
-module top(
+module uart_mods(
 	input wire i_Clk,
 	input wire i_UART_RX,
 	output wire o_LED_1,
